@@ -1,0 +1,496 @@
+{
+ "fetched_at": "2026-09-28",
+ "orcid": "0000-0002-3833-946X",
+ "educations": [
+  {
+   "org": "Kyonggi University",
+   "department": "Department of Life Sciences",
+   "role": "Ph.D student",
+   "start": 2025,
+   "end": null
+  },
+  {
+   "org": "University of Science and Technology Korea",
+   "department": "Geological Sciences",
+   "role": "Master",
+   "start": 2021,
+   "end": 2024
+  },
+  {
+   "org": "Chungnam National University",
+   "department": "Marine Environmental Sciences",
+   "role": "Bachelor",
+   "start": 2017,
+   "end": 2019
+  }
+ ],
+ "employments": [
+  {
+   "org": "Korea Institute of Geoscience and Mineral Resources",
+   "department": "Climate Change Response Division",
+   "role": "Master's student",
+   "start": 2021,
+   "end": 2024
+  }
+ ],
+ "qualifications": [
+  {
+   "org": "Ministry of Environment",
+   "department": "Nature Environment and Ecological Restoration",
+   "role": "Engineer",
+   "start": 2020,
+   "end": null
+  },
+  {
+   "org": "Ministry of Oceans and Fisheries",
+   "department": "Ocean Environment",
+   "role": "Engineer",
+   "start": 2019,
+   "end": null
+  },
+  {
+   "org": "Ministry of Environment",
+   "department": "Biological Classification – animal",
+   "role": "Engineer",
+   "start": 2018,
+   "end": null
+  }
+ ],
+ "works": [
+  {
+   "doi": "10.7857/JSGE.2026.31.4.026",
+   "type": "journal-article",
+   "title": "Integrated Assessment of Heavy Metal Contamination Types in River and Lake Sediments Using Principal Component Analysis and Ecological Risk Index",
+   "journal": "Journal of Soil and Groundwater Environment",
+   "year": 2026,
+   "date": [
+    2026,
+    8,
+    31
+   ],
+   "volume": "31",
+   "issue": "4",
+   "pages": "26-36",
+   "authors": [
+    {
+     "name": "Jeong C",
+     "me": true
+    },
+    {
+     "name": "Kwak I-S",
+     "me": false
+    },
+    {
+     "name": "Lee J-H",
+     "me": false
+    },
+    {
+     "name": "Kong D",
+     "me": false
+    }
+   ]
+  },
+  {
+   "doi": "10.1016/j.ejrh.2026.103732",
+   "type": "journal-article",
+   "title": "Hydrological controls on seasonal nitrate reduction and microbial community dynamics in the hyporheic zone of Songjiho lagoon, South Korea",
+   "journal": "Journal of Hydrology: Regional Studies",
+   "year": 2026,
+   "date": [
+    2026,
+    8
+   ],
+   "volume": "66",
+   "issue": null,
+   "pages": "103732",
+   "authors": [
+    {
+     "name": "Jeong C",
+     "me": true
+    },
+    {
+     "name": "Song SM",
+     "me": false
+    },
+    {
+     "name": "Jeon W-H",
+     "me": false
+    },
+    {
+     "name": "Cho SY",
+     "me": false
+    },
+    {
+     "name": "Hyun SP",
+     "me": false
+    },
+    {
+     "name": "Moon HS",
+     "me": false
+    }
+   ]
+  },
+  {
+   "doi": "10.15681/KSWE.2026.42.3.254",
+   "type": "journal-article",
+   "title": "Distribution Patterns of Oligochaete Assemblages in Relation to Environmental Factors in Freshwater Sediments of Korea",
+   "journal": "Journal of Korean Society on Water Environment",
+   "year": 2026,
+   "date": [
+    2026,
+    5,
+    30
+   ],
+   "volume": "42",
+   "issue": "3",
+   "pages": "254-256",
+   "authors": [
+    {
+     "name": "Kong D",
+     "me": false
+    },
+    {
+     "name": "Song J-H",
+     "me": false
+    },
+    {
+     "name": "Jeong C",
+     "me": true
+    },
+    {
+     "name": "Kim MC",
+     "me": false
+    },
+    {
+     "name": "Lee JH",
+     "me": false
+    },
+    {
+     "name": "Kwak I-S",
+     "me": false
+    }
+   ]
+  },
+  {
+   "doi": "10.15681/KSWE.2026.42.3.207",
+   "type": "journal-article",
+   "title": "Hydrobiological Responses and Ecological Vulnerability of Mountain Headwater Streams under Climate Change: Benthic Macroinvertebrate Assemblages and Indicator Species in Bangtaecheon",
+   "journal": "Journal of Korean Society on Water Environment",
+   "year": 2026,
+   "date": [
+    2026,
+    5,
+    30
+   ],
+   "volume": "42",
+   "issue": "3",
+   "pages": "207-219",
+   "authors": [
+    {
+     "name": "Jeong C",
+     "me": true
+    },
+    {
+     "name": "Song J",
+     "me": false
+    },
+    {
+     "name": "Lee S",
+     "me": false
+    },
+    {
+     "name": "Choi H",
+     "me": false
+    },
+    {
+     "name": "Kim A",
+     "me": false
+    },
+    {
+     "name": "Chu Y",
+     "me": false
+    },
+    {
+     "name": "Kong D",
+     "me": false
+    }
+   ]
+  },
+  {
+   "doi": "10.1007/s10750-026-06158-3",
+   "type": "journal-article",
+   "title": "Integrating sediment quality gradients and macroinvertebrate assemblages: indicator typologies of Annelida and Chironomidae in freshwater ecosystems",
+   "journal": "Hydrobiologia",
+   "year": 2026,
+   "date": [
+    2026,
+    2,
+    23
+   ],
+   "volume": "853",
+   "issue": "12",
+   "pages": "3477-3491",
+   "authors": [
+    {
+     "name": "Song J",
+     "me": false
+    },
+    {
+     "name": "Jeong C",
+     "me": true
+    },
+    {
+     "name": "Kwak IS",
+     "me": false
+    },
+    {
+     "name": "Kong D",
+     "me": false
+    }
+   ]
+  },
+  {
+   "doi": "10.2139/ssrn.6713368",
+   "type": "preprint",
+   "title": "A model-based thermal baseline and an improved macroinvertebrate thermal tolerance index as ecological indicators of stream ecosystem responses to climate change",
+   "journal": "",
+   "year": 2026,
+   "date": [
+    2026
+   ],
+   "volume": null,
+   "issue": null,
+   "pages": null,
+   "authors": [
+    {
+     "name": "Jeong C",
+     "me": true
+    },
+    {
+     "name": "Kong D",
+     "me": false
+    },
+    {
+     "name": "Chu Y",
+     "me": false
+    }
+   ]
+  },
+  {
+   "doi": "10.1016/j.ecolind.2025.114380",
+   "type": "journal-article",
+   "title": "Integrated risk assessment of sediment-bound heavy metals using macroinvertebrate indicators in South Korea’s major river basins",
+   "journal": "Ecological Indicators",
+   "year": 2025,
+   "date": [
+    2025,
+    12
+   ],
+   "volume": "181",
+   "issue": null,
+   "pages": "114380",
+   "authors": [
+    {
+     "name": "Jeong C",
+     "me": true
+    },
+    {
+     "name": "Song J",
+     "me": false
+    },
+    {
+     "name": "Kong D",
+     "me": false
+    }
+   ]
+  },
+  {
+   "doi": "10.15681/KSWE.2025.41.6.484",
+   "type": "journal-article",
+   "title": "Assessing Climate Change Vulnerability of Three Hydropsyche Species Using Probability-Based Habitat Suitability and Random Forest Models",
+   "journal": "Journal of Korean Society on Water Environment",
+   "year": 2025,
+   "date": [
+    2025,
+    11,
+    30
+   ],
+   "volume": "41",
+   "issue": "6",
+   "pages": "484-494",
+   "authors": [
+    {
+     "name": "Choi H",
+     "me": false
+    },
+    {
+     "name": "Jeong C",
+     "me": true
+    },
+    {
+     "name": "Kang B",
+     "me": false
+    },
+    {
+     "name": "Kang S-R",
+     "me": false
+    },
+    {
+     "name": "Kong D",
+     "me": false
+    }
+   ]
+  },
+  {
+   "doi": "10.15681/KSWE.2025.41.6.439",
+   "type": "journal-article",
+   "title": "Microhabitat Overlap and Mesohabitat Specificity of Benthic Macroinvertebrates Based on Quadrat Sampling in the Jojong Stream",
+   "journal": "Journal of Korean Society on Water Environment",
+   "year": 2025,
+   "date": [
+    2025,
+    11,
+    30
+   ],
+   "volume": "41",
+   "issue": "6",
+   "pages": "439-454",
+   "authors": [
+    {
+     "name": "Kong D",
+     "me": false
+    },
+    {
+     "name": "Kwon Y",
+     "me": false
+    },
+    {
+     "name": "Jeong C",
+     "me": true
+    }
+   ]
+  },
+  {
+   "doi": "10.15681/KSWE.2025.41.3.214",
+   "type": "journal-article",
+   "title": "Multivariate Analysis of Environmental Factors Differentiating the Ecological Distribution of the Mayfly Genus Ephemera (Ephemeroptera: Ephemeridae)",
+   "journal": "Journal of Korean Society on Water Environment",
+   "year": 2025,
+   "date": [
+    2025,
+    5,
+    30
+   ],
+   "volume": "41",
+   "issue": "3",
+   "pages": "214-223",
+   "authors": [
+    {
+     "name": "Jeong C",
+     "me": true
+    },
+    {
+     "name": "Kong D",
+     "me": false
+    }
+   ]
+  },
+  {
+   "doi": "10.1016/j.ejrh.2025.102303",
+   "type": "journal-article",
+   "title": "Effect of rainfall on spatiotemporal variation of hydrochemical and isotopic characteristics of the Coastal Lagoon (Songjiho) and groundwater in Korea",
+   "journal": "Journal of Hydrology: Regional Studies",
+   "year": 2025,
+   "date": [
+    2025,
+    4
+   ],
+   "volume": "58",
+   "issue": null,
+   "pages": "102303",
+   "authors": [
+    {
+     "name": "Jeong C",
+     "me": true
+    },
+    {
+     "name": "Jeon W-H",
+     "me": false
+    },
+    {
+     "name": "Kim D-H",
+     "me": false
+    },
+    {
+     "name": "Song SM",
+     "me": false
+    },
+    {
+     "name": "Lee J-Y",
+     "me": false
+    },
+    {
+     "name": "Hyun SP",
+     "me": false
+    },
+    {
+     "name": "Moon HS",
+     "me": false
+    }
+   ]
+  },
+  {
+   "doi": "10.7857/JSGE.2021.26.6.130",
+   "type": "journal-article",
+   "title": "Seasonal Assessment of Groundwater-Dependent Ecosystem Using Monitoring of Benthic Macroinvertebrates in Wetland",
+   "journal": "Journal of Soil and Groundwater Environment",
+   "year": 2021,
+   "date": [
+    2021,
+    12,
+    31
+   ],
+   "volume": "26",
+   "issue": "6",
+   "pages": "130-143",
+   "authors": [
+    {
+     "name": "Jeong C",
+     "me": true
+    },
+    {
+     "name": "Choi J-W",
+     "me": false
+    },
+    {
+     "name": "Moon HS",
+     "me": false
+    },
+    {
+     "name": "Kim D-H",
+     "me": false
+    },
+    {
+     "name": "Moon S-H",
+     "me": false
+    },
+    {
+     "name": "O Y-H",
+     "me": false
+    },
+    {
+     "name": "Han JY",
+     "me": false
+    },
+    {
+     "name": "Oh S",
+     "me": false
+    },
+    {
+     "name": "Kim Y",
+     "me": false
+    }
+   ]
+  }
+ ]
+}

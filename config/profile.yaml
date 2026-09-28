@@ -1,0 +1,38 @@
+# Hand-written content. Everything else (education, experience, licenses,
+# publications) is pulled from ORCID by scripts/fetch_orcid.py.
+
+orcid: 0000-0002-3833-946X
+owner_match: {family: Jeong, given: chanyoung}   # used to bold your name in author lists
+
+name: Chanyoung Jeong
+position: "Ph.D. student, Department of Life Sciences, Kyonggi University"
+email: heaveninjcy@kyonggi.ac.kr
+links:
+  researchgate: https://www.researchgate.net/profile/Chanyoung-Jeong-2
+  linkedin: https://www.linkedin.com/in/chanyoung-jeong-975a65316/
+
+summary: >-
+  I am a limnologist working on inland and coastal waters. I study how water
+  movement and sediment quality shape life on the beds of streams, lakes and
+  lagoons, and use benthic macroinvertebrates to read ecosystem condition and
+  climate vulnerability.
+
+research:
+  - title: "Sediment quality & macroinvertebrate indicators"
+    text: "Heavy-metal risk and indicator taxa (Annelida, Chironomidae) across major Korean river basins."
+  - title: "Climate vulnerability of stream fauna"
+    text: "Thermal baselines, tolerance indices and habitat models for headwater species."
+  - title: "Groundwater–surface water ecohydrology"
+    text: "Nitrate reduction, isotopes and microbes in the hyporheic zone of Songjiho lagoon."
+
+# Wording for ORCID entries. Key = "Organization | Department | Role" exactly as
+# in ORCID. A new ORCID entry without a key here is shown as ORCID has it, and
+# the build prints a warning so you can add its wording.
+affiliation_text:
+  "Kyonggi University | Department of Life Sciences | Ph.D student": "Ph.D. student, Department of Life Sciences, Kyonggi University"
+  "University of Science and Technology Korea | Geological Sciences | Master": "M.S., Geological Sciences, University of Science and Technology (UST)"
+  "Chungnam National University | Marine Environmental Sciences | Bachelor": "B.S., Marine Environmental Sciences, Chungnam National University"
+  "Korea Institute of Geoscience and Mineral Resources | Climate Change Response Division | Master's student": "Research Assistant, Climate Change Response Division, Korea Institute of Geoscience and Mineral Resources (KIGAM)"
+  "Ministry of Environment | Nature Environment and Ecological Restoration | Engineer": "Engineer Natural Ecology Restoration (Ministry of Environment, Korea)"
+  "Ministry of Oceans and Fisheries | Ocean Environment | Engineer": "Engineer Marine Environment (Ministry of Oceans and Fisheries, Korea)"
+  "Ministry of Environment | Biological Classification – animal | Engineer": "Engineer Biological Classification, Animal (Ministry of Environment, Korea)"

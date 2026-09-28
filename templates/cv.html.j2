@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>{{ p.name }} CV</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,500&family=Public+Sans:wght@400;500;600&display=swap">
+<style>
+@page{size:A4;margin:16mm 16mm 16mm 16mm}
+*{box-sizing:border-box}
+body{margin:0;color:#16211F;font-family:"Public Sans","Liberation Sans",Arial,sans-serif;font-size:9.6pt;line-height:1.45;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+.serif{font-family:"Newsreader","Liberation Serif",Georgia,serif}
+header{display:flex;justify-content:space-between;align-items:flex-end;gap:12mm;padding-bottom:4mm;border-bottom:1.4pt solid #0F5E5A}
+h1{margin:0;font-weight:500;font-size:24pt;line-height:1;letter-spacing:-.01em}
+.pos{margin:2mm 0 0;color:#5E6B68;font-size:10pt}
+.contact{text-align:right;font-size:8.8pt;color:#5E6B68;line-height:1.6}
+.contact a{color:#0F5E5A;text-decoration:none}
+section{margin-top:5.5mm}
+h2{margin:0 0 2.5mm;font-size:8.2pt;letter-spacing:.14em;text-transform:uppercase;color:#0F5E5A;font-weight:600}
+.summary{margin:0;font-size:10.5pt;line-height:1.45}
+.themes{margin:2mm 0 0;padding-left:4.5mm}
+.themes li{margin:.6mm 0}
+table{width:100%;border-collapse:collapse}
+td{vertical-align:top;padding:.9mm 0}
+td.y{width:23mm;color:#5E6B68;font-variant-numeric:tabular-nums;white-space:nowrap}
+h3{margin:4mm 0 1.8mm;font-size:11pt;font-weight:500;display:flex;justify-content:space-between;border-bottom:.5pt solid #DDE3E1;padding-bottom:1mm}
+h3 small{font-family:"Public Sans",Arial,sans-serif;font-size:8.4pt;color:#5E6B68;font-weight:400}
+ol{list-style:none;margin:0;padding:0}
+ol li{display:grid;grid-template-columns:8mm 1fr;margin:0 0 2.2mm;break-inside:avoid}
+ol .no{color:#0F5E5A;font-variant-numeric:tabular-nums}
+ol b{font-weight:600}
+.doi{color:#0F5E5A;text-decoration:none}
+.note{margin-top:1.5mm;color:#5E6B68;font-size:8.4pt}
+footer{margin-top:7mm;padding-top:2mm;border-top:.5pt solid #DDE3E1;color:#5E6B68;font-size:8pt;display:flex;justify-content:space-between}
+</style>
+</head>
+<body>
+<header>
+  <div>
+    <h1 class="serif">{{ p.name }}</h1>
+    <p class="pos">{{ p.position }}</p>
+  </div>
+  <div class="contact">
+    {{ p.email }}<br>
+    ORCID <a href="https://orcid.org/{{ orcid }}">{{ orcid }}</a><br>
+    <a href="{{ p.links.researchgate }}">ResearchGate</a> · <a href="{{ p.links.linkedin }}">LinkedIn</a>
+  </div>
+</header>
+
+<section>
+  <h2>Research Profile</h2>
+  <p class="summary serif">{{ p.summary }}</p>
+  <ul class="themes">
+    {% for r in p.research %}<li><b>{{ r.title }}</b>: {{ r.text }}</li>{% endfor %}
+  </ul>
+</section>
+
+<section>
+  <h2>Education</h2>
+  <table>{% for r in education %}<tr><td class="y">{{ r.span }}</td><td>{{ r.text }}</td></tr>{% endfor %}</table>
+</section>
+
+{% if experience %}
+<section>
+  <h2>Research Experience</h2>
+  <table>{% for r in experience %}<tr><td class="y">{{ r.span }}</td><td>{{ r.text }}</td></tr>{% endfor %}</table>
+</section>
+{% endif %}
+
+{% if licenses %}
+<section>
+  <h2>Licenses</h2>
+  <table>{% for r in licenses %}<tr><td class="y">{{ r.start }}</td><td>{{ r.text }}</td></tr>{% endfor %}</table>
+</section>
+{% endif %}
+
+<section>
+  <h2>Publications</h2>
+  <p class="note">{{ n_pubs }} publications, {{ n_first }} as first author. Own name in bold.</p>
+  {% for g in pubs %}
+  <h3 class="serif">{% if g.key in ["SCIE","KCI"] %}Publications ({{ g.key }}){% else %}{{ g.key }}{% endif %}<small>{{ g["items"]|length }}</small></h3>
+  <ol>
+    {% for w in g["items"] %}
+    <li><span class="no">[{{ w.no }}]</span><span>{{ w.authors }}, {{ w.year }}. {{ w.title }}. <i>{{ w.source }}</i>.{% if w.doi %} <a class="doi" href="https://doi.org/{{ w.doi }}">doi:{{ w.doi }}</a>{% endif %}</span></li>
+    {% endfor %}
+  </ol>
+  {% endfor %}
+</section>
+
+<footer><span>{{ p.name }} · Curriculum Vitae</span><span>Updated {{ updated }} from ORCID</span></footer>
+</body>
+</html>

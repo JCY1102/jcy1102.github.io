@@ -1,0 +1,10 @@
+# Journal -> publication group. Matching ignores case and surrounding spaces.
+# Journal names must match the DOI metadata ("container-title").
+# A new journal missing here lands in "Unclassified" and the build warns.
+SCIE:
+  - "Journal of Hydrology: Regional Studies"
+  - "Hydrobiologia"
+  - "Ecological Indicators"
+KCI:
+  - "Journal of Korean Society on Water Environment"
+  - "Journal of Soil and Groundwater Environment"
