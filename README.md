@@ -34,11 +34,25 @@ ORCID 공개 기록과 DOI 메타데이터로 영문 한 페이지짜리 홈페�
 - ORCID 조회에 실패하면 캐시를 유지하므로 사이트가 비지 않는다.
 - CV PDF는 매 빌드마다 같은 데이터로 새로 인쇄된다. 다운로드 링크에 갱신 날짜(`?v=YYYY-MM-DD`)를 붙여 방문자가 이전 PDF를 캐시로 받지 않게 한다. PDF 생성이 실패하면 빌드가 실패하고, 이전에 배포된 사이트와 PDF가 그대로 유지된다.
 
-## GitHub Pages 배포 (미실행, 사용자 요청 시 진행)
+## 배포
 
-1. GitHub에 공개 저장소 `jcy1102.github.io`를 만든다.
-2. 이 폴더의 내용을 그 저장소의 최상위에 올린다(`.github/` 포함).
-3. 저장소 Settings → Pages → Source를 "GitHub Actions"로 지정한다.
+- 사이트: https://jcy1102.github.io
+- 저장소: https://github.com/JCY1102/jcy1102.github.io
+- Settings → Pages → Source는 "GitHub Actions"여야 한다. "Deploy from a branch"로 두면 README가 사이트를 덮어쓴다.
+- 이 폴더는 상위 Research 저장소의 `.gitignore`에 들어 있다. 다른 PC에서는 이 위치에 위 저장소를 clone한다.
+
+## 수정하는 방법
+
+| 바꿀 것 | 방법 |
+| --- | --- |
+| 논문, 학력, 경력, 자격 | ORCID에서 수정한다. 다음 날 03:00(KST)에 자동 반영된다. |
+| 연구 소개, 연구 주제, 링크, 직함 표기 | `config/profile.yaml`을 고친 뒤 commit·push한다. |
+| 새 학술지의 SCIE/KCI 분류 | `config/journals.yaml`에 추가한 뒤 commit·push한다. |
+| 사진 | `static/assets/profile.jpg`(정사각형)나 `banner.jpg`(가로 2400×1000 권장)를 같은 이름으로 바꾸고 commit·push한다. |
+| 디자인 | `templates/index.html.j2`(사이트), `templates/cv.html.j2`(CV)를 고친다. |
+| 즉시 갱신 | 저장소 Actions 탭 → "Update from ORCID and deploy" → Run workflow. |
+
+push 전에 로컬에서 `로컬 실행`의 세 명령으로 `_site/index.html`을 열어 확인할 수 있다. push하면 2~4분 뒤 사이트에 반영된다.
 
 ## 확인이 필요한 사항
 
