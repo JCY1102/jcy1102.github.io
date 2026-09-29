@@ -6,6 +6,7 @@ import shutil
 import subprocess
 import sys
 import tempfile
+import time
 from html import escape
 from pathlib import Path
 
@@ -107,19 +108,34 @@ def find_chrome():
     return next((c for c in cands if c and Path(c).exists()), None)
 
 
-def print_pdf(html_path, pdf_path):
+def print_pdf(html_path, pdf_path, timeout=180):
     chrome = find_chrome()
     if not chrome:
         raise RuntimeError("Chrome/Edge not found; set CHROME_BIN to build the CV PDF.")
-    with tempfile.TemporaryDirectory() as profile_dir:
-        subprocess.run(
+    # Headless Chrome 154 on macOS writes the PDF but never exits, so wait for its
+    # "bytes written to file" line on stderr instead of waiting for the process to end.
+    with tempfile.TemporaryDirectory() as profile_dir, tempfile.TemporaryFile() as log:
+        proc = subprocess.Popen(
             [
                 chrome, "--headless=new", "--disable-gpu", "--no-sandbox", "--no-pdf-header-footer",
                 f"--user-data-dir={profile_dir}", "--virtual-time-budget=15000",
                 f"--print-to-pdf={pdf_path}", html_path.as_uri(),
             ],
-            check=True, capture_output=True, timeout=180,
+            stdout=subprocess.DEVNULL, stderr=log,
         )
+        deadline = time.monotonic() + timeout
+        written = False
+        while not written and proc.poll() is None and time.monotonic() < deadline:
+            time.sleep(0.2)
+            log.seek(0)
+            written = b"bytes written to file" in log.read()
+        if proc.poll() is None:
+            proc.kill()
+        proc.wait()
+        log.seek(0)
+        output = log.read().decode(errors="replace")
+    if not written and proc.returncode != 0:
+        raise RuntimeError(f"Chrome failed or timed out after {timeout}s (exit {proc.returncode}):\n{output[-2000:]}")
     if not pdf_path.exists() or pdf_path.stat().st_size == 0:
         raise RuntimeError("CV PDF was not created.")
 

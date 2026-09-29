@@ -24,6 +24,8 @@ ORCID 공개 기록과 DOI 메타데이터로 영문 한 페이지짜리 홈페�
 .venv/Scripts/python.exe projects/personal-homepage/scripts/build.py
 ```
 
+macOS·Linux에서는 `.venv/Scripts/python.exe` 대신 `.venv/bin/python`을 쓴다. macOS의 헤드리스 Chrome은 PDF를 저장한 뒤 종료하지 않는 경우가 있어, `build.py`는 저장 완료 메시지를 확인하면 Chrome을 종료한다.
+
 결과는 `_site/index.html`과 `_site/assets/Chanyoung_Jeong_CV.pdf`에 생긴다. `_site/`는 빌드 산출물이므로 버전 관리하지 않는다.
 
 ## 자동 갱신 규칙
