@@ -40,14 +40,13 @@ photos:
     - {src: 04-cast-net.jpg, ratio: "4/3", crop: [0.000, 0.175, 1.000, 0.750], alt: "Throwing a cast net in a mountain stream", wide: true}
     - {src: 05-boat-net.jpg, ratio: "3/4", crop: [0.000, 0.000, 1.000, 1.000], alt: "Hauling a sampling net on a boat at sea"}
     - {src: 06-sample-sorting.jpg, ratio: "3/4", crop: [0.290, 0.002, 0.420, 0.996], alt: "Sorting samples into numbered buckets on a research vessel"}
-    - {src: 07-trout-in-stream.jpg, ratio: "4/3", crop: [0.040, 0.050, 0.800, 0.800], alt: "A trout resting among stones in a clear stream", wide: true}
+    - {src: 07-trout-in-stream.jpg, ratio: "1", crop: [0.220, 0.050, 0.600, 0.800], alt: "A trout resting among stones in a clear stream"}
     - {src: 08-bass.jpg, ratio: "1", crop: [0.163, 0.117, 0.575, 0.767], alt: "Holding a largemouth bass caught during a river survey"}
-    - {src: 09-flounder.jpg, ratio: "1", crop: [0.125, 0.000, 0.750, 1.000], alt: "A juvenile flatfish held in the hand"}
-    - {src: 10-trout-measure.jpg, ratio: "16/9", crop: [0.120, 0.190, 0.620, 0.620], alt: "Measuring a juvenile trout against a ruler", wide: true}
-    - {src: 11-crayfish.jpg, ratio: "3/4", crop: [0.005, 0.124, 0.790, 0.593], alt: "Crayfish collected during a survey"}
-    - {src: 12-shrimp.jpg, ratio: "3/4", crop: [0.249, 0.000, 0.562, 1.000], alt: "A freshwater shrimp in a hand net"}
-    - {src: 13-mayfly-nymph.jpg, ratio: "1", crop: [0.175, 0.213, 0.450, 0.253], alt: "An aquatic insect nymph in a sorting tray"}
-    - {src: 14-microscope.jpg, ratio: "1", crop: [0.000, 0.182, 1.000, 0.687], alt: "An aquatic larva under the microscope"}
+    - {src: 09-trout-measure.jpg, ratio: "16/9", crop: [0.120, 0.190, 0.620, 0.620], alt: "Measuring a juvenile trout against a ruler", wide: true}
+    - {src: 10-crayfish.jpg, ratio: "3/4", crop: [0.005, 0.124, 0.790, 0.593], alt: "Crayfish collected during a survey"}
+    - {src: 11-shrimp.jpg, ratio: "3/4", crop: [0.249, 0.000, 0.562, 1.000], alt: "A freshwater shrimp in a hand net"}
+    - {src: 12-mayfly-nymph.jpg, ratio: "1", crop: [0.175, 0.213, 0.450, 0.253], alt: "An aquatic insect nymph in a sorting tray"}
+    - {src: 13-microscope.jpg, ratio: "1", crop: [0.000, 0.182, 1.000, 0.687], alt: "An aquatic larva under the microscope"}
   scenery: {src: frozen-lake.jpg, alt: "Frozen Songjiho lagoon under a blue winter sky"}
 
 # Wording for ORCID entries. Key = "Organization | Department | Role" exactly as
