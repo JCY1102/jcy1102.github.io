@@ -68,6 +68,36 @@ class PrintPdf(unittest.TestCase):
         self.assertLess(time.monotonic() - start, 10)
         self.assertEqual(self.pdf.read_bytes(), b"%PDF-1.4 fake")
 
+    def test_helper_still_writing_to_the_profile_does_not_fail_the_build(self):
+        # Like the Linux CI runner: a Chrome helper keeps writing into --user-data-dir
+        # after the main process is stopped, so the temporary profile cannot be removed.
+        helper = self.dir / "helper.py"
+        helper.write_text(
+            "import os, sys, time\n"
+            "end = time.monotonic() + 4\n"
+            "i = 0\n"
+            "while time.monotonic() < end:\n"
+            "    folder = os.path.join(sys.argv[1], 'Default')\n"
+            "    try:\n"
+            "        os.makedirs(folder, exist_ok=True)\n"
+            "        open(os.path.join(folder, f'f{i}'), 'w').close()\n"
+            "    except OSError:\n"
+            "        pass\n"
+            "    i += 1\n",
+            encoding="utf-8",
+        )
+        body = "\n".join([
+            "import subprocess",
+            "profile = next(a.split('=', 1)[1] for a in sys.argv if a.startswith('--user-data-dir='))",
+            f"subprocess.Popen([sys.executable, {str(helper)!r}, profile])",
+            "time.sleep(0.5)",
+            'print(f"13 bytes written to file {pdf}", file=sys.stderr, flush=True)',
+            "time.sleep(600)",
+        ])
+        os.environ["CHROME_BIN"] = fake_chrome(self.dir, body, report=False)
+        print_pdf(self.dir / "cv.html", self.pdf, timeout=20)
+        self.assertEqual(self.pdf.read_bytes(), b"%PDF-1.4 fake")
+
     def test_chrome_that_exits_normally_still_works(self):
         os.environ["CHROME_BIN"] = fake_chrome(self.dir, "")
         print_pdf(self.dir / "cv.html", self.pdf, timeout=20)

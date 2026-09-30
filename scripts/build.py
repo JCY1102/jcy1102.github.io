@@ -3,6 +3,7 @@ import json
 import os
 import re
 import shutil
+import signal
 import subprocess
 import sys
 import tempfile
@@ -116,14 +117,18 @@ def print_pdf(html_path, pdf_path, timeout=180):
     # the Linux CI runner), so stop waiting once it reports "bytes written to file" on
     # stdout or stderr, or once the PDF exists and its size has held for a second.
     pdf_path.unlink(missing_ok=True)
-    with tempfile.TemporaryDirectory() as profile_dir, tempfile.TemporaryFile() as log:
+    # Helpers can outlive the main Chrome process and keep writing to the profile, so
+    # Chrome runs in its own process group that is killed as a whole, and leftovers
+    # in the temporary profile never fail the build.
+    posix = os.name != "nt"
+    with tempfile.TemporaryDirectory(ignore_cleanup_errors=True) as profile_dir, tempfile.TemporaryFile() as log:
         proc = subprocess.Popen(
             [
                 chrome, "--headless=new", "--disable-gpu", "--no-sandbox", "--no-pdf-header-footer",
                 f"--user-data-dir={profile_dir}", "--virtual-time-budget=15000",
                 f"--print-to-pdf={pdf_path}", html_path.as_uri(),
             ],
-            stdout=log, stderr=subprocess.STDOUT,
+            stdout=log, stderr=subprocess.STDOUT, start_new_session=posix,
         )
         deadline = time.monotonic() + timeout
         written = False
@@ -131,13 +136,17 @@ def print_pdf(html_path, pdf_path, timeout=180):
         while not written and proc.poll() is None and time.monotonic() < deadline:
             time.sleep(0.2)
             log.seek(0)
-            written = b"bytes written to file" in log.read()
+            reported = b"bytes written to file" in log.read()
             now_size = pdf_path.stat().st_size if pdf_path.exists() else 0
-            if now_size and now_size == size:
-                written = time.monotonic() - steady_since >= 1
-            else:
+            if now_size != size:
                 size, steady_since = now_size, time.monotonic()
-        if proc.poll() is None:
+            written = reported or (size > 0 and time.monotonic() - steady_since >= 1)
+        if posix:
+            try:
+                os.killpg(proc.pid, signal.SIGKILL)
+            except ProcessLookupError:
+                pass
+        elif proc.poll() is None:
             proc.kill()
         proc.wait()
         log.seek(0)
