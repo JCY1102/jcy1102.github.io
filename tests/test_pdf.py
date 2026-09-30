@@ -18,14 +18,15 @@ FAKE_CHROME = f"""#!{sys.executable}
 import sys, time
 pdf = next(a.split("=", 1)[1] for a in sys.argv if a.startswith("--print-to-pdf="))
 open(pdf, "wb").write(b"%PDF-1.4 fake")
-print(f"13 bytes written to file {{pdf}}", file=sys.stderr, flush=True)
+{{report}}
 {{body}}
 """
+REPORT = 'print(f"13 bytes written to file {pdf}", file=sys.stderr, flush=True)'
 
 
-def fake_chrome(folder, body):
+def fake_chrome(folder, body, report=True):
     path = Path(folder) / "chrome"
-    path.write_text(FAKE_CHROME.replace("{body}", body), encoding="utf-8")
+    path.write_text(FAKE_CHROME.replace("{report}", REPORT if report else "").replace("{body}", body), encoding="utf-8")
     path.chmod(0o755)
     return str(path)
 
@@ -48,6 +49,20 @@ class PrintPdf(unittest.TestCase):
 
     def test_returns_once_pdf_is_written_even_if_chrome_hangs(self):
         os.environ["CHROME_BIN"] = fake_chrome(self.dir, "time.sleep(600)")
+        start = time.monotonic()
+        print_pdf(self.dir / "cv.html", self.pdf, timeout=20)
+        self.assertLess(time.monotonic() - start, 10)
+        self.assertEqual(self.pdf.read_bytes(), b"%PDF-1.4 fake")
+
+    def test_returns_when_message_goes_to_stdout_and_chrome_hangs(self):
+        body = 'print("13 bytes written to file", flush=True)\ntime.sleep(600)'
+        os.environ["CHROME_BIN"] = fake_chrome(self.dir, body, report=False)
+        start = time.monotonic()
+        print_pdf(self.dir / "cv.html", self.pdf, timeout=20)
+        self.assertLess(time.monotonic() - start, 10)
+
+    def test_returns_when_pdf_is_written_silently_and_chrome_hangs(self):
+        os.environ["CHROME_BIN"] = fake_chrome(self.dir, "time.sleep(600)", report=False)
         start = time.monotonic()
         print_pdf(self.dir / "cv.html", self.pdf, timeout=20)
         self.assertLess(time.monotonic() - start, 10)

@@ -112,8 +112,10 @@ def print_pdf(html_path, pdf_path, timeout=180):
     chrome = find_chrome()
     if not chrome:
         raise RuntimeError("Chrome/Edge not found; set CHROME_BIN to build the CV PDF.")
-    # Headless Chrome 154 on macOS writes the PDF but never exits, so wait for its
-    # "bytes written to file" line on stderr instead of waiting for the process to end.
+    # Headless Chrome 154 can write the PDF and then never exit (seen on macOS and on
+    # the Linux CI runner), so stop waiting once it reports "bytes written to file" on
+    # stdout or stderr, or once the PDF exists and its size has held for a second.
+    pdf_path.unlink(missing_ok=True)
     with tempfile.TemporaryDirectory() as profile_dir, tempfile.TemporaryFile() as log:
         proc = subprocess.Popen(
             [
@@ -121,14 +123,20 @@ def print_pdf(html_path, pdf_path, timeout=180):
                 f"--user-data-dir={profile_dir}", "--virtual-time-budget=15000",
                 f"--print-to-pdf={pdf_path}", html_path.as_uri(),
             ],
-            stdout=subprocess.DEVNULL, stderr=log,
+            stdout=log, stderr=subprocess.STDOUT,
         )
         deadline = time.monotonic() + timeout
         written = False
+        size, steady_since = -1, None
         while not written and proc.poll() is None and time.monotonic() < deadline:
             time.sleep(0.2)
             log.seek(0)
             written = b"bytes written to file" in log.read()
+            now_size = pdf_path.stat().st_size if pdf_path.exists() else 0
+            if now_size and now_size == size:
+                written = time.monotonic() - steady_since >= 1
+            else:
+                size, steady_since = now_size, time.monotonic()
         if proc.poll() is None:
             proc.kill()
         proc.wait()
