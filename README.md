@@ -9,7 +9,7 @@ ORCID 공개 기록과 DOI 메타데이터로 영문 한 페이지짜리 홈페�
 | `config/profile.yaml` | 이름, 소속, 연구 소개, 연구 주제, 링크, ORCID 항목의 표기 | 직접 수정 |
 | `config/journals.yaml` | 학술지별 SCIE/KCI 분류 | 새 학술지가 생기면 추가 |
 | `data/orcid_cache.json` | ORCID·DOI 조회 결과. 조회 실패 시 이전 값을 유지한다 | `scripts/fetch_orcid.py` |
-| `static/assets/` | 프로필 사진(720px), 배너(2400×1000), 파비콘 | 직접 교체 |
+| `static/assets/` | 프로필 사진(720px), 배너(2400×1000), 파비콘. `photos/`에 앨범·하단 풍경 사진(목록과 순서는 `profile.yaml`의 `photos`) | 직접 교체 |
 | `templates/` | 홈페이지(`index.html.j2`)와 CV(`cv.html.j2`) 틀 | |
 | `scripts/build.py` | `_site/`에 페이지를 만들고 Chrome으로 CV PDF를 인쇄한다 | |
 | `.github/workflows/deploy.yml` | 매일 03:00(KST)과 push할 때 수집, 빌드, 배포를 실행한다 | |

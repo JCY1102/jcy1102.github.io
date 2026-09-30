@@ -15,21 +15,20 @@ h1{margin:0;font-weight:500;font-size:24pt;line-height:1;letter-spacing:-.01em}
 .contact{text-align:right;font-size:8.8pt;color:#5E6B68;line-height:1.6}
 .contact a{color:#0F5E5A;text-decoration:none}
 section{margin-top:5.5mm}
-h2{margin:0 0 2.5mm;font-size:8.2pt;letter-spacing:.14em;text-transform:uppercase;color:#0F5E5A;font-weight:600}
+h2{margin:0 0 2.5mm;font-size:13pt;font-weight:500;padding-bottom:1mm;border-bottom:.5pt solid #DDE3E1}
 .summary{margin:0;font-size:10.5pt;line-height:1.45}
+.summary strong{font-weight:500;color:#0F5E5A}
 .themes{margin:2mm 0 0;padding-left:4.5mm}
 .themes li{margin:.6mm 0}
 table{width:100%;border-collapse:collapse}
 td{vertical-align:top;padding:.9mm 0}
 td.y{width:23mm;color:#5E6B68;font-variant-numeric:tabular-nums;white-space:nowrap}
-h3{margin:4mm 0 1.8mm;font-size:11pt;font-weight:500;display:flex;justify-content:space-between;border-bottom:.5pt solid #DDE3E1;padding-bottom:1mm}
-h3 small{font-family:"Public Sans",Arial,sans-serif;font-size:8.4pt;color:#5E6B68;font-weight:400}
+h3{margin:3.5mm 0 1.8mm;font-size:8.6pt;letter-spacing:.06em;color:#0F5E5A;font-weight:600}
 ol{list-style:none;margin:0;padding:0}
 ol li{display:grid;grid-template-columns:8mm 1fr;margin:0 0 2.2mm;break-inside:avoid}
 ol .no{color:#0F5E5A;font-variant-numeric:tabular-nums}
 ol b{font-weight:600}
 .doi{color:#0F5E5A;text-decoration:none}
-.note{margin-top:1.5mm;color:#5E6B68;font-size:8.4pt}
 footer{margin-top:7mm;padding-top:2mm;border-top:.5pt solid #DDE3E1;color:#5E6B68;font-size:8pt;display:flex;justify-content:space-between}
 </style>
 </head>
@@ -47,37 +46,23 @@ footer{margin-top:7mm;padding-top:2mm;border-top:.5pt solid #DDE3E1;color:#5E6B6
 </header>
 
 <section>
-  <h2>Research Profile</h2>
-  <p class="summary serif">{{ p.summary }}</p>
+  <h2 class="serif">Research</h2>
+  {% set k = p.summary_emphasis %}
+  <p class="summary serif">{% if k and k in p.summary %}{% set parts = p.summary.split(k, 1) %}{{ parts[0] }}<strong>{{ k }}</strong>{{ parts[1] }}{% else %}{{ p.summary }}{% endif %}</p>
   <ul class="themes">
     {% for r in p.research %}<li><b>{{ r.title }}</b>: {{ r.text }}</li>{% endfor %}
   </ul>
 </section>
 
 <section>
-  <h2>Education</h2>
-  <table>{% for r in education %}<tr><td class="y">{{ r.span }}</td><td>{{ r.text }}</td></tr>{% endfor %}</table>
+  <h2 class="serif">Education &amp; Experience</h2>
+  <table>{% for r in timeline %}<tr><td class="y">{{ r.span }}</td><td>{{ r.text }}</td></tr>{% endfor %}</table>
 </section>
 
-{% if experience %}
 <section>
-  <h2>Research Experience</h2>
-  <table>{% for r in experience %}<tr><td class="y">{{ r.span }}</td><td>{{ r.text }}</td></tr>{% endfor %}</table>
-</section>
-{% endif %}
-
-{% if licenses %}
-<section>
-  <h2>Licenses</h2>
-  <table>{% for r in licenses %}<tr><td class="y">{{ r.start }}</td><td>{{ r.text }}</td></tr>{% endfor %}</table>
-</section>
-{% endif %}
-
-<section>
-  <h2>Publications</h2>
-  <p class="note">{{ n_pubs }} publications, {{ n_first }} as first author. Own name in bold.</p>
+  <h2 class="serif">Publications</h2>
   {% for g in pubs %}
-  <h3 class="serif">{% if g.key in ["SCIE","KCI"] %}Publications ({{ g.key }}){% else %}{{ g.key }}{% endif %}<small>{{ g["items"]|length }}</small></h3>
+  <h3>{{ g.key }}</h3>
   <ol>
     {% for w in g["items"] %}
     <li><span class="no">[{{ w.no }}]</span><span>{{ w.authors }}, {{ w.year }}. {{ w.title }}. <i>{{ w.source }}</i>.{% if w.doi %} <a class="doi" href="https://doi.org/{{ w.doi }}">doi:{{ w.doi }}</a>{% endif %}</span></li>
