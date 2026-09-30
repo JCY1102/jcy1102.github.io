@@ -37,14 +37,28 @@ aside{display:flex;flex-direction:column;gap:16px;align-self:start}
 h1.name{font-weight:500;font-size:36px;line-height:1.1;margin:0;letter-spacing:-.01em}
 .role{color:var(--muted);margin:0;font-size:14px}
 .icons{display:flex;gap:10px;flex-wrap:wrap}
-.icons a{width:40px;height:40px;border-radius:50%;border:1px solid var(--line);display:grid;place-items:center;color:var(--accent);background:#fff;transition:background .15s,border-color .15s,color .15s}
-.icons a:hover{color:#fff;border-color:transparent}
+.icons button{font:inherit;cursor:pointer;padding:0}
+.icons a,.icons button{width:40px;height:40px;border-radius:50%;border:1px solid var(--line);display:grid;place-items:center;color:var(--accent);background:#fff;transition:background .15s,border-color .15s,color .15s}
+.icons a:hover,.icons button:hover{color:#fff;border-color:transparent}
 .icons a.orcid:hover{background:#A6CE39}
 .icons a.rg:hover{background:#00CCBB}
 .icons a.li:hover{background:#0A66C2}
-.icons a.mail:hover{background:var(--accent)}
+.icons .mail:hover{background:var(--accent)}
+.check{border:1px solid var(--line);border-radius:10px;padding:22px 22px 18px;width:min(340px,calc(100vw - 32px));background:var(--bg);color:var(--ink);box-shadow:0 12px 40px rgba(22,33,31,.18)}
+.check::backdrop{background:rgba(22,33,31,.35)}
+.check h2{margin:0 0 6px;font-size:20px;font-weight:500}
+.check p{margin:0 0 14px;color:var(--muted);font-size:14px}
+.check label{display:block;font-size:14px;margin-bottom:6px}
+.check input{width:100%;font:inherit;padding:8px 10px;border:1px solid var(--line);border-radius:6px;background:#fff;color:var(--ink)}
+.check input:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
+.check .err{color:#A33A2B;font-size:13px;margin:6px 0 0;min-height:1.2em}
+.check .row{display:flex;justify-content:flex-end;gap:8px;margin-top:10px}
+.check button{font:inherit;font-size:14px;font-weight:600;border-radius:6px;padding:8px 14px;cursor:pointer;border:1px solid var(--line);background:#fff;color:var(--ink)}
+.check button[type=submit]{background:var(--accent);border-color:var(--accent);color:#fff}
+.check .manual{margin:8px 0 0;font-size:14px;color:var(--ink);user-select:all;overflow-wrap:anywhere}
+.toast{position:fixed;left:50%;bottom:28px;transform:translate(-50%,12px);background:var(--ink);color:#fff;font-size:14px;padding:10px 16px;border-radius:8px;opacity:0;pointer-events:none;transition:opacity .2s,transform .2s;z-index:20}
+.toast.show{opacity:1;transform:translate(-50%,0)}
 .icons svg{width:20px;height:20px;display:block}
-.email{font-size:13.5px;color:var(--muted);margin:-4px 0 0;overflow-wrap:anywhere}
 .cv{align-self:flex-start;display:inline-flex;align-items:center;gap:8px;font-size:14px;font-weight:600;text-decoration:none;background:var(--accent);color:#fff;padding:9px 16px;border-radius:6px}
 .cv:hover{background:#0B4B48}
 .cv svg{width:16px;height:16px}
@@ -129,11 +143,10 @@ footer div{max-width:1180px;margin:0 auto;padding:20px clamp(16px,4vw,48px);disp
       <a class="li" href="{{ p.links.linkedin }}" target="_blank" rel="noopener" aria-label="LinkedIn" title="LinkedIn">
         <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="1.5" y="1.5" width="21" height="21" rx="4" fill="none" stroke="currentColor" stroke-width="1.6"/><text x="12" y="16.6" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-weight="700" font-size="11" fill="currentColor">in</text></svg>
       </a>
-      <a class="mail" href="mailto:{{ p.email }}" aria-label="Email" title="{{ p.email }}">
+      <button type="button" class="mail" data-code="{{ email_code }}" aria-label="Copy email address" title="Copy email address">
         <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"><rect x="2.5" y="5" width="19" height="14" rx="2"/><path d="M3 6.5l9 6.5 9-6.5"/></svg>
-      </a>
+      </button>
     </div>
-    <p class="email">{{ p.email }}</p>
     <a class="cv" href="{{ cv_file }}" download>
       <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12m0 0l-5-5m5 5l5-5M4 19h16"/></svg>
       Download CV
@@ -203,5 +216,49 @@ footer div{max-width:1180px;margin:0 auto;padding:20px clamp(16px,4vw,48px);disp
 })();
 </script>
 {% endif %}
+<dialog class="check" id="check" aria-labelledby="check-title">
+  <form method="dialog" id="check-form">
+    <h2 class="serif" id="check-title">Copy email address</h2>
+    <p>A quick check that you are not a bot.</p>
+    <label for="check-answer" id="check-q"></label>
+    <input id="check-answer" inputmode="numeric" autocomplete="off" required>
+    <p class="err" id="check-err" role="alert"></p>
+    <p class="manual" id="check-manual" hidden></p>
+    <div class="row"><button type="button" id="check-cancel">Cancel</button><button type="submit">Copy</button></div>
+  </form>
+</dialog>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<script>
+(() => {
+  const btn = document.querySelector(".icons .mail"), dlg = document.getElementById("check"),
+    form = document.getElementById("check-form"), q = document.getElementById("check-q"),
+    ans = document.getElementById("check-answer"), err = document.getElementById("check-err"),
+    manual = document.getElementById("check-manual"), toast = document.getElementById("toast");
+  let sum = 0, done = false;
+  const toastMsg = t => { toast.textContent = t; toast.classList.add("show"); clearTimeout(toast.t); toast.t = setTimeout(() => toast.classList.remove("show"), 2600); };
+  btn.addEventListener("click", () => {
+    const a = 2 + Math.floor(Math.random() * 8), b = 2 + Math.floor(Math.random() * 8);
+    sum = a + b; done = false;
+    q.textContent = `What is ${a} + ${b}?`;
+    ans.value = ""; err.textContent = ""; manual.hidden = true; ans.hidden = false;
+    form.querySelector("[type=submit]").hidden = false;
+    dlg.showModal(); ans.focus();
+  });
+  document.getElementById("check-cancel").addEventListener("click", () => dlg.close());
+  form.addEventListener("submit", async e => {
+    e.preventDefault();
+    if (parseInt(ans.value, 10) !== sum) { err.textContent = "That is not right. Please try again."; ans.select(); return; }
+    const email = atob(btn.dataset.code).split("").reverse().join("");
+    try {
+      await navigator.clipboard.writeText(email);
+      dlg.close(); toastMsg("Email address copied to clipboard");
+    } catch {
+      err.textContent = "Copying is blocked in this browser. Please copy it below.";
+      manual.textContent = email; manual.hidden = false; ans.hidden = true;
+      form.querySelector("[type=submit]").hidden = true;
+    }
+  });
+})();
+</script>
 </body>
 </html>

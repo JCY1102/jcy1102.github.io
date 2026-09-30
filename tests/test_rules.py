@@ -9,7 +9,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "scripts"))
 
 from fetch_orcid import abbreviate_author, normalize_doi  # noqa: E402
-from build import classify, format_authors  # noqa: E402
+from build import classify, encode_email, format_authors  # noqa: E402
 
 JOURNALS = {
     "SCIE": ["Hydrobiologia", "Journal of Hydrology: Regional Studies"],
@@ -64,6 +64,20 @@ class ClassifyRules(unittest.TestCase):
 
     def test_unknown_journal_is_flagged(self):
         self.assertEqual(classify({"type": "journal-article", "journal": "New Journal"}, JOURNALS), "Unclassified")
+
+
+class EmailRules(unittest.TestCase):
+    # The page carries the address only in this form; its script decodes it with
+    # atob() and reverses the text after the visitor passes the human check.
+    def test_address_is_not_readable_in_the_page(self):
+        code = encode_email("name@example.ac.kr")
+        self.assertNotIn("@", code)
+        self.assertNotIn("example", code)
+
+    def test_decoding_restores_the_address(self):
+        import base64
+        code = encode_email("name@example.ac.kr")
+        self.assertEqual(base64.b64decode(code).decode()[::-1], "name@example.ac.kr")
 
 
 class ConfigFiles(unittest.TestCase):

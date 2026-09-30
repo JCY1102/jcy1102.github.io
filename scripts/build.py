@@ -1,4 +1,5 @@
 """Build _site/ (index.html, assets, CV PDF) from config/ and data/orcid_cache.json."""
+import base64
 import json
 import os
 import re
@@ -20,6 +21,11 @@ OUT = ROOT / "_site"
 CV_NAME = "Chanyoung_Jeong_CV.pdf"
 GROUPS = ["SCIE", "KCI", "Preprints", "Unclassified"]
 TAXA = ["Hydropsyche", "Ephemera", "Ephemeroptera", "Ephemeridae"]
+
+
+def encode_email(email):
+    """Reversed and base64-encoded, so the address is not plain text in the page."""
+    return base64.b64encode(email[::-1].encode()).decode()
 
 
 def classify(work, journals):
@@ -166,6 +172,7 @@ def main():
 
     ctx = {
         "p": profile,
+        "email_code": encode_email(profile["email"]),
         "orcid": data["orcid"],
         "updated": data["fetched_at"],
         "timeline": affiliation_rows(data["educations"] + data["employments"], texts, warnings),
