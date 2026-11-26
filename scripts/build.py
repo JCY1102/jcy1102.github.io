@@ -1,5 +1,6 @@
 """Build _site/ (index.html, assets, CV PDF) from config/ and data/orcid_cache.json."""
 import base64
+import hashlib
 import json
 import os
 import re
@@ -180,8 +181,6 @@ def main():
         "experience": affiliation_rows(data["employments"], texts, []),
         "licenses": affiliation_rows(data["qualifications"], texts, warnings),
         "pubs": build_publications(data["works"], journals, warnings),
-        # date query makes browsers fetch the new PDF after each ORCID update
-        "cv_file": f"assets/{CV_NAME}?v={data['fetched_at']}",
     }
     ctx["n_pubs"] = sum(len(g["items"]) for g in ctx["pubs"])
     ctx["n_first"] = sum(w["first"] for g in ctx["pubs"] for w in g["items"])
@@ -190,12 +189,19 @@ def main():
     if OUT.exists():
         shutil.rmtree(OUT)
     shutil.copytree(ROOT / "static", OUT)
-    (OUT / "index.html").write_text(env.get_template("index.html.j2").render(**ctx), encoding="utf-8")
 
     with tempfile.TemporaryDirectory() as tmp:
         cv_html = Path(tmp) / "cv.html"
         cv_html.write_text(env.get_template("cv.html.j2").render(**ctx), encoding="utf-8")
         print_pdf(cv_html, OUT / "assets" / CV_NAME)
+
+    # A distinct filename bypasses cached downloads even after same-day updates.
+    pdf = OUT / "assets" / CV_NAME
+    digest = hashlib.sha256(pdf.read_bytes()).hexdigest()[:16]
+    versioned_name = f"{Path(CV_NAME).stem}-{digest}.pdf"
+    shutil.copyfile(pdf, pdf.with_name(versioned_name))
+    ctx["cv_file"] = f"assets/{versioned_name}"
+    (OUT / "index.html").write_text(env.get_template("index.html.j2").render(**ctx), encoding="utf-8")
 
     print(f"Built {OUT} with {ctx['n_pubs']} publications (ORCID data from {ctx['updated']}).")
     for w in warnings:

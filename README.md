@@ -34,7 +34,7 @@ macOS·Linux에서는 `.venv/Scripts/python.exe` 대신 `.venv/bin/python`을 �
 - 학술지가 `journals.yaml`에 없으면 해당 논문은 "Unclassified"로 표시된다. 빌드 로그와 Actions 요약에 경고가 남는다.
 - ORCID에 학력·경력·자격 항목을 새로 추가했는데 `profile.yaml`의 `affiliation_text`에 표기가 없으면, ORCID 원문 그대로 표시되고 경고가 남는다.
 - ORCID 조회에 실패하면 캐시를 유지하므로 사이트가 비지 않는다.
-- CV PDF는 매 빌드마다 같은 데이터로 새로 인쇄된다. 다운로드 링크에 갱신 날짜(`?v=YYYY-MM-DD`)를 붙여 방문자가 이전 PDF를 캐시로 받지 않게 한다. PDF 생성이 실패하면 빌드가 실패하고, 이전에 배포된 사이트와 PDF가 그대로 유지된다.
+- CV PDF는 매 빌드마다 같은 데이터로 새로 인쇄된다. 다운로드 파일명에 PDF 내용의 해시를 붙여 같은 날 다시 갱신해도 이전 PDF를 캐시로 받지 않게 한다. 고정 파일명도 직접 링크용으로 유지한다. PDF 생성이 실패하면 빌드가 실패하고, 이전에 배포된 사이트와 PDF가 그대로 유지된다.
 
 ## 배포
 
